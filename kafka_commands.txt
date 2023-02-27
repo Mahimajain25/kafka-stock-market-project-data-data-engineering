@@ -1,0 +1,56 @@
+#step 1 
+- create Ec2 instance with linux machine and create the key 
+- Downloaded key stored in one folder folder/example.pem 
+
+#step 2
+- cd folder 
+- connect with shh and copy the command 
+
+#step 3
+- Install kafka cmd 
+wget https://downloads.apache.org/kafka/3.2.3/kafka_2.12-3.2.3.tgz 
+- unzip the file 
+tar -xvf kafka_2.12-3.2.3.tgz
+
+#step 4
+- Instal JVM 
+sudo yum install java-1.8.0-openjdk
+java -version
+
+#step 5
+- Start Zoo-keeper (make sure connected to Ec2 instance)
+cd kafka_2.12-3.2.3
+bin/zookeeper-server-start.sh config/zookeeper.properties
+- Start Kafka-server 
+- - Duplicate the session & enter in a new console (allocate more memory)
+export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M" 
+cd kafka_2.12-3.2.3
+bin/kafka-server-start.sh config/server.properties
+
+It is pointing to private server , change server.properties so that it can run in public IP
+#step 6
+- change ADVERTISED_LISTENERS to public ip of the EC2 instance
+cd kafka_2.12-3.2.3
+sudo nano config/server.properties 
+>>change advertised.listeners=PLAINTEXT://{public_IP}}:9092
+
+#step 7 
+Create the topic
+Duplicate the session & enter in a new console 
+cd kafka_2.12-3.2.3
+bin/kafka-topics.sh --create --topic demo_testing --bootstrap-server {Put the Public IP of your EC2 Instance:9092} --replication-factor 1 --partitions 1
+
+#step 8
+create producer (zookeeper and kafka  must be started)
+Duplicate the session & enter in a new console
+cd kafka_2.12-3.2.3
+bin/kafka-console-producer.sh --topic demo_testing --bootstrap-server {Put the Public IP of your EC2 Instance:9092} 
+
+#step 9
+create consumer (zookeeper and kafka  must be started)
+Duplicate the session & enter in a new console
+cd kafka_2.12-3.2.3
+bin/kafka-console-consumer.sh --topic demo_testing --bootstrap-server {Put the Public IP of your EC2 Instance:9092}
+
+#step 10
+run python producer and consumer file code to load the data on to AWS s3 
