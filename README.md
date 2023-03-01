@@ -9,7 +9,7 @@
 - Future Enhancements: Room for adding data visualization, machine learning predictions, real-time alerts, and scalability.
 
 # Architecture
-![kafkaArchitecture](https://user-images.githubusercontent.com/96101074/221560528-bcdb0862-f150-4b9e-b35d-7c6c27dbf546.png)
+![kafkaArchitecture](https://drive.google.com/uc?export=view&id=1v3cUGDaArAryU9Uc-etFdDNX8EHJdsS8)
 
 # Project Implementation
 1. Launch EC2 instance and install Apache Kafka.
